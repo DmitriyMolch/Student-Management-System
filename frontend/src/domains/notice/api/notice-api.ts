@@ -40,7 +40,7 @@ export const noticeApi = api.injectEndpoints({
     }),
     addNotice: builder.mutation<{ message: string }, NoticeFormProps>({
       query: (payload) => ({
-        url: `/notices`,
+        url: `/notices/add`,
         method: 'POST',
         body: payload
       }),

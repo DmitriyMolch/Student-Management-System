@@ -45,7 +45,7 @@ router.get(
   noticeController.handleFetchNoticeDetailById
 );
 router.get("", checkApiAccess, noticeController.handleFetchAllNotices);
-router.post("", checkApiAccess, noticeController.handleAddNotice);
+router.post("/add", checkApiAccess, noticeController.handleAddNotice);
 router.put("/:id", checkApiAccess, noticeController.handleUpdateNotice);
 
 module.exports = { noticesRoutes: router };

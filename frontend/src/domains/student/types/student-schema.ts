@@ -12,13 +12,27 @@ export const BasicInfoSchema = z.object({
   gender: z.string().min(1, 'Gender is required'),
   dob: z.union([z.date(), z.string()]),
   phone: z.string().min(1, 'Phone is required'),
-  email: z.string().min(1, 'Email is required')
+  email: z.string().min(1, 'Email is required').email('Email address should be valid')
 });
+
+const INT_MAX = 2147483647;
 
 export const AcademicInfoSchema = z.object({
   class: z.string().min(1, 'Class is required'),
   section: z.string(),
-  roll: z.string().min(1, 'Roll is required'),
+  roll: z
+    .any()
+    .transform((val) => String(val)) // force conversion to string
+    .refine((val) => val.trim() !== '', {
+      message: 'Roll is required'
+    })
+    .refine((val) => /^\d+$/.test(val), {
+      message: 'Roll must be a number'
+    })
+    .transform((val) => Number(val))
+    .refine((val) => val >= 0 && val <= INT_MAX, {
+      message: `Roll number is too large `
+    }),
   admissionDate: z.union([z.date(), z.string()])
 });
 
